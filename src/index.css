@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* Definindo a fonte padrão como Open Sans para todo o projeto */
+@layer base {
+  body {
+    @apply font-sans;
+  }
+}
+
+.grid-background {
+  background-color: #EAEFF2; 
+  background-image:
+    linear-gradient(rgba(33, 33, 33, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 33, 33, 0.8) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(120, 90, 50, 0.05) 0px, transparent 2px, transparent 4px),
+    repeating-linear-gradient(90deg, rgba(120, 90, 50, 0.05) 0px, transparent 2px, transparent 4px),
+    radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size:
+    40px 40px, 
+    40px 40px, 
+    200px 200px, 
+    200px 200px,
+    4px 4px; 
+  width: 100%; 
+  background-blend-mode: multiply, multiply, overlay, overlay, normal;
+}
+
+.background-chat {
+  background-image: url('/images/bg-chat.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+}
+
+.bg-gradient {
+    background: linear-gradient(to bottom, #CBE3FB, #E7F6FF);
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.animate-blink {
+    animation: blink 1s infinite;
+}
