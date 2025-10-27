@@ -36,6 +36,12 @@
     background: linear-gradient(to bottom, #fdf9ed, #BFC0BF);
 }
 
+input:focus {
+    outline: none; /* Remove a borda de foco */
+    box-shadow: none; /* Remove qualquer sombra */
+    border-color: inherit; /* Mantém a cor da borda original */
+}
+
 @keyframes blink {
     0% {
         opacity: 1;

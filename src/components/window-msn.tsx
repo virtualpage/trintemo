@@ -1,9 +1,17 @@
 import { Chat } from "./chat"
 import { ProfileComponent } from "./profile"
 
-export const WindowMsn = () => {
+interface WindowMsnProps {
+    close: () => void;
+}
+
+export const WindowMsn = ({close}: WindowMsnProps) => {
+
     return (
-        <div className="w-full max-w-220 mx-3 mb-10 rounded-md border border-[#525B60] bg-white overflow-hidden z-00" style={{zIndex: "100"}}>
+        <div
+            className="w-full max-w-220 mx-3 h-full mb-10 rounded-md border border-[#525B60] bg-white overflow-hidden z-00"
+            style={{ zIndex: "100"  }}
+        >
             <header className="w-full text-white h-8 bg-[#3BB2EA] relative shadow-[0_4px_6px_-2px_rgba(255,255,255,0.8)] z-10">
                 <div className="flex absolute left-2 top-1">
                     <img src="/images/avatar-msn.png" alt="" className="w-6 " />
@@ -11,15 +19,15 @@ export const WindowMsn = () => {
                     <p className="hidden sm:block">trint.emo@hotmail.com</p>
                 </div>
                 <div className="w-28 h-4.5 flex absolute right-3 top-0 border border-[#525B60] rounded-b-md">
-                    <div className="flex-2 flex items-start justify-center">
+                    <button className="flex-2 flex items-start justify-center rounded-bl-sm cursor-pointer hover:bg-white hover:opacity-75">
                         <img src="/images/minimizar.png" alt="minimizar" className="w-6" />
-                    </div>
-                    <div className="flex-2 flex items-center justify-center border-x border-[#525B60]">
+                    </button>
+                    <button className="flex-2 flex items-center justify-center border-x border-[#525B60]">
                         <img src="/images/maximizar.png" alt="maximizar" className="w-4.5" />
-                    </div>
-                    <div className="flex-3 flex items-center justify-center">
+                    </button>
+                    <button onClick={close} className="flex-3 flex items-center justify-center rounded-br-sm cursor-pointer hover:bg-red-400 ">
                         <img src="/images/fechar.png" alt="fechar" className="w-5" />
-                    </div>
+                    </button>
                 </div>
             </header>
             <nav className="text-white">

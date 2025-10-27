@@ -33,13 +33,13 @@ export const ProfileComponent = () => {
                         className="absolute scale-[0.8] rounded-md top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                     />
                 </div>
-                <div className="mt-2 z-50 md:absolute md:-right-25">
+                <div className="mt-2 z-50 md:absolute text-[16px] md:-right-35">
                     <h4>Gabi e Henrique</h4>
-                    <p className="flex gap-1 items-center">
+                    <p className="flex md:gap-1 gap-0.5 items-center text-[12px] flex-wrap">
                         <PiMusicNotesFill />
-                        Fresno
+                        Caminho escolhido
                         <span
-                            className="cursor-pointer rounded-sm border border-[#525B60] ml-2 px-2"
+                            className="cursor-pointer rounded-sm border border-[#525B60] px-0 md:px-2"
                             onClick={handlePlayPause}
                         >
                             {!isPlaying ? <IoIosPlay /> : <IoPauseSharp />}
@@ -58,7 +58,7 @@ export const ProfileComponent = () => {
                     <img src="/images/border-profile.png" alt="border" className="w-full h-full" />
                 </div>
             </div>
-            <audio ref={audioRef} src="/audios/eu-sei.mp3" />
+            <audio ref={audioRef} src="/audios/caminho-escolhido.mp3" />
         </div>
     );
 };
