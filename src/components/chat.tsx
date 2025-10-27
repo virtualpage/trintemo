@@ -1,22 +1,13 @@
-import { useEffect, useState } from "react";
+import { useChat } from "../context/chat-context";
 
 export const Chat = () => {
-    const [loadedDate, setLoadedDate] = useState<string>("");
-    const [step, setStep] = useState<number>(0);
-    const [convidados, setConvidados] = useState<string>("");
-    const [confirmed, setConfirmed] = useState<boolean | null>(null);
-    const [confirmedChopp, setConfirmedChopp] = useState<boolean>(false);
-
-    useEffect(() => {
-        const currentDate = new Date().toLocaleString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-        setLoadedDate(currentDate);
-    }, []);
+    const {
+        loadedDate,
+        step, setStep,
+        convidados, setConvidados,
+        confirmed, setConfirmed,
+        confirmedChopp, setConfirmedChopp
+    } = useChat();
 
     return (
         <div className="w-full md:min-h-140 flex py-4 flex-col justify-end px-6">
@@ -130,12 +121,12 @@ export const Chat = () => {
                         type="text"
                         className="w-full h-full"
                         value={convidados}
-                        onChange={(e) => setConvidados(e.target.value)} 
+                        onChange={(e) => setConvidados(e.target.value)}
                     />
                     <button
                         onClick={() => {
-                            console.log("Convidados:", convidados); 
-                            setStep(3); 
+                            console.log("Convidados:", convidados);
+                            setStep(3);
                         }}
                         className="bg-blue-400 px-3 rounded-sm cursor-pointer"
                     >

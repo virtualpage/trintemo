@@ -2,9 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import { WindowMsn } from "./window-msn";
 import { WindowNotification } from "./window-notitication";
 import { WindowTintemo } from "./window-trintemo";
+import { useChat } from "../context/chat-context";
 
 export const Main = () => {
-
+    const { step } = useChat();
+    console.log(step)
     // const mockData = {
     //     convidado: "Vitor Hugo",
     //     presenca: true,

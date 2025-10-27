@@ -1,20 +1,10 @@
 import { IoIosPlay, IoMdArrowDropdown } from "react-icons/io";
 import { PiMusicNotesFill } from "react-icons/pi";
-import { useState, useRef } from "react";
 import { IoPauseSharp } from "react-icons/io5";
+import { useAudio } from "../context/audio-context";
 
 export const ProfileComponent = () => {
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef<HTMLAudioElement>(null);
-
-    const handlePlayPause = () => {
-        if (!audioRef.current) return;
-        if (isPlaying) audioRef.current.pause();
-        else audioRef.current.play();
-        setIsPlaying(!isPlaying);
-    };
-
-    console.log(isPlaying)
+    const { isPlaying, togglePlayPause } = useAudio();
 
     return (
         <div className="flex flex-col justify-between pb-2">
@@ -40,14 +30,15 @@ export const ProfileComponent = () => {
                         Caminho escolhido
                         <span
                             className="cursor-pointer rounded-sm border border-[#525B60] px-0 md:px-2"
-                            onClick={handlePlayPause}
+                            onClick={togglePlayPause}
                         >
                             {!isPlaying ? <IoIosPlay /> : <IoPauseSharp />}
                         </span>
                     </p>
                 </div>
+                
             </div>
-            <div className="pr-4 pl-6 hidden md:flex">
+                        <div className="pr-4 pl-6 hidden md:flex">
                 <div className="relative w-30 h-30 mx-2">
                     <div className="absolute -left-5 top-6 flex flex-col items-center gap-2">
                         <div className="w-4 h-4 flex items-center justify-center bg-[#d1d1d1] rounded-md border border-[#525B60]">
@@ -58,7 +49,6 @@ export const ProfileComponent = () => {
                     <img src="/images/border-profile.png" alt="border" className="w-full h-full" />
                 </div>
             </div>
-            <audio ref={audioRef} src="/audios/caminho-escolhido.mp3" />
         </div>
     );
 };
