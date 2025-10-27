@@ -5,11 +5,11 @@ import { WindowTintemo } from "./window-trintemo";
 
 export const Main = () => {
 
-    const mockData = {
-        convidado: "Vitor Hugo",
-        presenca: true,
-        bebe: false,
-    }
+    // const mockData = {
+    //     convidado: "Vitor Hugo",
+    //     presenca: true,
+    //     bebe: false,
+    // }
 
     const [showInvitation, setShowInvitation] = useState(false);
     const [playNotificationSound, setPlayNotificationSound] = useState(true);
