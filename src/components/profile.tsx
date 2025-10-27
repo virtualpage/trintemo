@@ -58,7 +58,7 @@ export const ProfileComponent = () => {
                     <img src="/images/border-profile.png" alt="border" className="w-full h-full" />
                 </div>
             </div>
-            <audio ref={audioRef} src="/audios/alguem-que-te-faz-sorrir.mp3" />
+            <audio ref={audioRef} src="/audios/eu-sei.mp3" />
         </div>
     );
 };
