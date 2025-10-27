@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { WindowMsn } from "./window-msn";
 import { WindowNotification } from "./window-notitication";
+import { WindowTintemo } from "./window-trintemo";
 
 export const Main = () => {
     const [showInvitation, setShowInvitation] = useState(false);
@@ -37,14 +38,9 @@ export const Main = () => {
             {!showInvitation ? (
                 <>
 
-                        <img src="/images/mao-rock.png" alt="papel" className="absolute w-30 -left-40" />
-                        <img src="/images/aspas.png" alt="papel" className="absolute w-15 -right-40" />
-                    <button
-                        className="px-4 py-2 bg-red-600 rounded-sm cursor-pointer"
-                        onClick={() => setShowInvitation(true)}
-                    >
-                        Abrir convite
-                    </button>
+                    <img src="/images/mao-rock.png" alt="papel" className="absolute w-30 -left-40" />
+                    <img src="/images/aspas.png" alt="papel" className="absolute w-15 -right-40" />
+                    <WindowTintemo open={() => setShowInvitation(true)} />
                     <img src="/images/papel.png" alt="papel" className="absolute -right-20 -bottom-45" />
                     <img src="/images/papel.png" alt="papel" className="absolute -left-20 -top-45 rotate-180" />
                 </>
