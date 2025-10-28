@@ -55,7 +55,7 @@ export const Main = () => {
     console.log(filtrado)
     return (
         (filtrado && filtrado.length > 0) ? (
-            <main className="min-h-screen w-full relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background">
+            <main className="min-h-screen w-full relative px-3 py-4 sm:py-8 flex flex-col md:gap-18 items-center justify-center grid-background">
                 {!showInvitation ? (
                     <>
                         <img src="/images/mao-rock.png" alt="papel" className="absolute w-30 -left-40" />
