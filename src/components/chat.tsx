@@ -1,4 +1,6 @@
+import { useParams } from "react-router-dom";
 import { useChat } from "../context/chat-context";
+import { confirmation, drink, message, notConfirmation, notDrink } from "../services/services";
 
 export const Chat = () => {
     const {
@@ -9,11 +11,13 @@ export const Chat = () => {
         confirmedChopp, setConfirmedChopp
     } = useChat();
 
+    const { nome } = useParams()
+
     return (
-        <div className="w-full md:min-h-140 flex py-4 flex-col justify-end px-6">
+        <div className="w-full flex flex-col justify-end px-6 pb-8 pt-20 overflow-y-scroll max-h-[200px]">
             <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-            <p className="ml-4">Vem pra nossa festa?</p>
-            <p className="ml-4">Vai serdia 13 de dezembro às 16:00 em Eldorado </p>
+            <p className="ml-4">Ooi, {nome} tu vem pra nossa festa?</p>
+            <p className="ml-4">Vai ser dia 13 de dezembro às 16:00 em Eldorado </p>
             {confirmed == false && (
                 <>
                     <p className="text-[#6f6f6f]">Você diz:</p>
@@ -67,16 +71,18 @@ export const Chat = () => {
             )}
             {/* {step > 3 && confirmed && (
                     <>
-                        <p className="text-[#6f6f6f]">Você diz:</p>
-                        <p className="ml-4">{convidados}</p>
-                        <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                        <p className="ml-4">Beleza, a gente te aguarda lá</p>
+                    <p className="text-[#6f6f6f]">Você diz:</p>
+                    <p className="ml-4">{convidados}</p>
+                    <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                    <p className="ml-4">Beleza, a gente te aguarda lá</p>
                     </>
             )} */}
             {step == 0 && (
                 <div className="bg-white mt-1 flex items-center h-9 py-1 px-3 rounded-lg border border-[#909090]">
                     <button
-                        className="bg-[#3BB2EA] px-3 rounded-md mr-2 cursor-pointer" onClick={() => {
+                        className="bg-[#3BB2EA] px-3 rounded-md mr-2 cursor-pointer"
+                        onClick={() => {
+                            if (nome) confirmation(nome)
                             setConfirmed(true)
                             setStep(1)
                         }}
@@ -86,6 +92,7 @@ export const Chat = () => {
                     <button
                         className="bg-[#999999] px-3 rounded-md cursor-pointer"
                         onClick={() => {
+                            if (nome) notConfirmation(nome)
                             setConfirmed(false)
                             setStep(1)
                         }}
@@ -98,6 +105,7 @@ export const Chat = () => {
                 <div className="bg-white mt-1 flex items-center h-9 py-1 px-3 rounded-lg border border-[#909090]">
                     <button
                         className="bg-[#3BB2EA] px-3 rounded-md mr-2 cursor-pointer" onClick={() => {
+                            if (nome) drink(nome)
                             setConfirmedChopp(true)
                             setStep(2)
                         }}
@@ -107,6 +115,7 @@ export const Chat = () => {
                     <button
                         className="bg-[#999999] px-3 rounded-md cursor-pointer"
                         onClick={() => {
+                            if (nome) notDrink(nome)
                             setConfirmedChopp(false)
                             setStep(2)
                         }}
@@ -125,7 +134,7 @@ export const Chat = () => {
                     />
                     <button
                         onClick={() => {
-                            console.log("Convidados:", convidados);
+                            if (nome) message(nome, convidados)
                             setStep(3);
                         }}
                         className="bg-blue-400 px-3 rounded-sm cursor-pointer"

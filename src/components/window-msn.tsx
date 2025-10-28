@@ -19,7 +19,7 @@ export const WindowMsn = ({close}: WindowMsnProps) => {
                     <p className="hidden sm:block">trint.emo@hotmail.com</p>
                 </div>
                 <div className="w-28 h-4.5 flex absolute right-3 top-0 border border-[#525B60] rounded-b-md">
-                    <button className="flex-2 flex items-start justify-center rounded-bl-sm cursor-pointer hover:bg-white hover:opacity-75">
+                    <button onClick={close} className="flex-2 flex items-start justify-center rounded-bl-sm cursor-pointer hover:bg-white hover:opacity-75">
                         <img src="/images/minimizar.png" alt="minimizar" className="w-6" />
                     </button>
                     <button className="flex-2 flex items-center justify-center border-x border-[#525B60]">

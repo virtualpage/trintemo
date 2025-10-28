@@ -1,6 +1,6 @@
-import { Main } from "./components/main"
 import { AudioProvider } from "./context/audio-context"
 import { ChatProvider } from "./context/chat-context"
+import { AppRoutes } from "./routes/routes"
 
 function App() {
 
@@ -8,7 +8,7 @@ function App() {
     <>
       <AudioProvider>
         <ChatProvider>
-          <Main />
+          <AppRoutes />
         </ChatProvider>
       </AudioProvider>
     </>
