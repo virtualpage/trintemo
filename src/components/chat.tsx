@@ -13,7 +13,7 @@ export const Chat = () => {
         confirmed, setConfirmed,
         confirmedChopp, setConfirmedChopp,
     } = useChat();
-    
+
     const { nome } = useParams()
     const [isEditing, setIsEditing] = useState(false); // Estado para controlar o modo de edição
     console.log(step)
@@ -46,20 +46,12 @@ export const Chat = () => {
                     </div>
                 )}
                 {step >= 1 && confirmed && (
-                    confirmed ? (
+                    confirmed && (
                         <div id="2">
                             <p className="text-[#6f6f6f]">Você diz:</p>
                             <p className="ml-4">Sim!</p>
                             <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
                             <p className="ml-4">Tu vai beber chopp?</p>
-                        </div>
-                    ) : (
-                        <div id="3">
-                            <p className="text-[#6f6f6f]">Você diz:</p>
-                            <p className="ml-4">Não</p>
-                            <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                            <p className="ml-4">Beleza</p>
-                            <p className="ml-4">A gente te aguarda lá</p>
                         </div>
                     ))}
                 {step == 2 && confirmedChopp ? (
