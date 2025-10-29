@@ -154,7 +154,7 @@ export const Chat = () => {
                         </button>
                     </div>
                 )}
-                {step == 2 && (
+                {step == 1 && (
                     confirmed ? (
                         <div id="10" className="bg-white mt-1 flex items-center h-9 py-1 px-3 rounded-lg border border-[#909090]">
                             <button

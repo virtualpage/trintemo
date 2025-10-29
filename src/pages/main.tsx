@@ -157,7 +157,7 @@ export const Main = () => {
             </main>
         ) : (
             <main className="min-h-screen w-full relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background">
-                <h1>Convite não encontrado</h1>
+                
             </main>
         )
     );
