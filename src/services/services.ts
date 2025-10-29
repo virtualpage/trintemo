@@ -115,7 +115,7 @@ export const message = async (nome: string, mensagem: string) => {
     }
 };
 
-export const step = async (nome: string, stepNumber: number) => {
+export const stepDb = async (nome: string, stepNumber: number) => {
     try {
         const response = await fetch(`${API_URL}/step/${nome}/${stepNumber}`, {
             method: 'PATCH',

@@ -5,8 +5,9 @@ interface WindowNotificationProps {
 }
 
 export const WindowNotification = ({ openNotification }: WindowNotificationProps) => {
-    const {step} = useChat();
-    
+    const {currentGuest} = useChat();
+    const step = currentGuest?.step ?? 0;
+    console.log(step)
     return (
         <div
             className={`absolute top-2 left-2 w-70 h-40 bg-gradient rounded-sm border border-[#525B60] z-99 ${step < 3 && "animate-blink"} `}
@@ -16,7 +17,7 @@ export const WindowNotification = ({ openNotification }: WindowNotificationProps
                 <p className="pl-8">Windows Live Messenger</p>
             </div>
             <div className="flex pr-4 translate-y-3 md:relative">
-                <div className="relative w-30 h-24 mx-2">
+                <div className="relative w-30 h-22 mx-2">
                     <img src="/images/border-profile.png" alt="border" className="w-full h-full" />
                     <img
                         src="/images/perfil-gabi-henrique.png"

@@ -6,6 +6,7 @@ import { GuestPanel } from "../pages/guest-panel";
 export const AppRoutes = () => (
     <BrowserRouter>
         <Routes>
+            <Route path="/" element={<Main />} />
             <Route path="/:nome" element={<Main />} />
             <Route path="/painel-convidados-12345" element={<GuestPanel />} />
         </Routes>

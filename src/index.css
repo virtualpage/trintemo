@@ -1,10 +1,27 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Rocket Italix';
+  src: url('./assets/fonts/rocket-italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Definindo a fonte padrão como Open Sans para todo o projeto */
 @layer base {
   body {
     @apply font-sans;
   }
+}
+
+.rocket-font {
+  font-family: 'Rocket Italix', sans-serif;
+  font-size: 40px;
+  line-height: 33px;
+}
+
+.rocket-font.shadow {
+  text-shadow: 1px 1px 0px red;
 }
 
 .grid-background {
@@ -40,6 +57,10 @@ input:focus {
     outline: none; /* Remove a borda de foco */
     box-shadow: none; /* Remove qualquer sombra */
     border-color: inherit; /* Mantém a cor da borda original */
+}
+
+button {
+  cursor: pointer;
 }
 
 @keyframes blink {
