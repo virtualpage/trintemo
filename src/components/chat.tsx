@@ -53,32 +53,25 @@ export const Chat = () => {
                             <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
                             <p className="ml-4">Tu vai beber chopp?</p>
                         </div>
-                    ))}
-                {step == 2 && confirmedChopp ? (
-                    // confirmed ? (
-                    <div id="4">
-                        <p className="text-[#6f6f6f]">Você diz:</p>
-                        <p className="ml-4">Sim!</p>
-                        <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                        <p className="ml-4">E quem mais vai vir junto?</p>
-                    </div>
-                ) : (
-                    <div id="5">
-                        <p className="text-[#6f6f6f]">Você diz:</p>
-                        <p className="ml-4">Não</p>
-                        <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                        <p className="ml-4">E quem mais vai vir junto?</p>
-                    </div>
-                )
-                    // ) : (
-                    //     <>
-                    //         <p className="text-[#6f6f6f]">Você diz:</p>
-                    //         <p className="ml-4">Não</p>
-                    //         <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                    //         <p className="ml-4">E quem mais vai vir junto?</p>
-                    //     </>
-                    // )
+                    ))
                 }
+                {step == 2 && confirmedChopp && (
+                    confirmedChopp ? (
+                        <div id="4">
+                            <p className="text-[#6f6f6f]">Você diz:</p>
+                            <p className="ml-4">Sim!</p>
+                            <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                            <p className="ml-4">E quem mais vai vir junto?</p>
+                        </div>
+                    ) : (
+                        <div id="5">
+                            <p className="text-[#6f6f6f]">Você diz:</p>
+                            <p className="ml-4">Não</p>
+                            <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                            <p className="ml-4">E quem mais vai vir junto?</p>
+                        </div>
+                    )
+                )}
                 {step > 2 && confirmed && (
                     <div id="6">
                         <p className="text-[#6f6f6f]">Você diz:</p>
