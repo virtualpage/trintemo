@@ -58,12 +58,12 @@ export const GuestPanel = () => {
                                 <td className="py-1 px-4">{guest.nome}</td>
                                 <td className="py-1 px-4">
                                     <a
-                                        href={`http://localhost:5174/${guest.nome}`}
+                                        href={`https://trintemo.site/${guest.nome}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-blue-600 underline"
                                     >
-                                        {`http://localhost:5174/${guest.nome}`}
+                                        {`https://trintemo.site/${guest.nome}`}
                                     </a>
                                 </td>
                                 <td className="py-1 px-4">
