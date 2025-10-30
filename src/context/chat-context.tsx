@@ -8,6 +8,7 @@ interface ChatProviderProps {
 interface Guest {
     id: number;
     nome: string;
+    slug: string;
     telefone: string;
     message: string;
     presenca: boolean;
@@ -36,7 +37,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     const [convidados, setConvidados] = useState<string>("");
     const [confirmed, setConfirmed] = useState<boolean | null>(null);
     const [confirmedChopp, setConfirmedChopp] = useState<boolean>(false);
-    const [currentGuest, setCurrrentGuest] = useState<Guest | null>(null);
+    const [currentGuest, setCurrrentGuest] = useState<Guest | null >(null);
 
     const loadedDate = new Date().toLocaleString("pt-BR", {
         day: "2-digit",
@@ -50,7 +51,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         const fetchGuests = async () => {
             const guests: Guest[] = await getGuests();
             const guestName = window.location.pathname.replace("/", "");
-            const filtrado = guests.find((g) => g.nome === guestName);
+            const filtrado = guests.find((g) => g.slug === guestName);
             setCurrrentGuest(filtrado || null);
         };
 
@@ -63,7 +64,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             setConfirmedChopp(currentGuest.bebidaAlcoolica);
         }
     }, [currentGuest]);
-    
+
     return (
         <ChatContext.Provider
             value={{

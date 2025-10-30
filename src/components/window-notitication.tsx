@@ -7,7 +7,7 @@ interface WindowNotificationProps {
 export const WindowNotification = ({ openNotification }: WindowNotificationProps) => {
     const {currentGuest} = useChat();
     const step = currentGuest?.step ?? 0;
-    console.log(step)
+
     return (
         <div
             className={`absolute top-2 left-2 w-70 h-40 bg-gradient rounded-sm border border-[#525B60] z-99 ${step < 3 && "animate-blink"} `}

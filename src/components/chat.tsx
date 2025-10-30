@@ -52,7 +52,7 @@ export const Chat = () => {
             chatElement.scrollTop = chatElement.scrollHeight;
         }
     }
-    console.log(currentGuest?.nome)
+
     return (
         <div className="w-full flex min-h-145 md:min-h-140 flex-col justify-between px-6 pb-1 md:pt-25 overflow-y-scroll max-h-[200px]">
             <div id="chat" className="overflow-y-scroll overflow-x-hidden mb-4">

@@ -60,7 +60,6 @@ export const Main = () => {
     }, []);
 
     const filtrado = guest?.filter((g: { slug: string }) => g.slug === window.location.pathname.replace("/", ""));
-
     return (
         (filtrado && filtrado.length > 0) ? (
             <main className="min-h-screen w-full relative px-3 pb-8 pt-14 flex flex-col md:gap-10 items-center justify-center grid-background">
@@ -106,8 +105,6 @@ export const Main = () => {
                         )}
                     </>
                 )}
-
-
             </main>
         ) : (
             <main className="min-h-screen w-full relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background">
