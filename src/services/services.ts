@@ -28,6 +28,21 @@ export const newGuest = async (nome: string) => {
     }
 };
 
+export const deleteGuest = async (nome: string) => {
+    try {
+        const response = await fetch(`${API_URL}/delete-guest/${nome}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error("Erro ao adicionar convidado:", error);
+        return false;
+    }
+};
+
 export const confirmation = async (nome: string) => {
     try {
         const response = await fetch(`${API_URL}/confirmation/${nome}`, {

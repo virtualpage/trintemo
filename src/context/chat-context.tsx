@@ -56,7 +56,6 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
         fetchGuests();
     }, []);
-
     useEffect(() => {
         if (currentGuest) {
             setStep(currentGuest.step);
@@ -64,7 +63,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             setConfirmedChopp(currentGuest.bebidaAlcoolica);
         }
     }, [currentGuest]);
-
+    
     return (
         <ChatContext.Provider
             value={{

@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useChat } from "../context/chat-context";
-import { confirmation, drink, message, notConfirmation, notDrink, stepDb } from "../services/services";
+import { confirmation, drink, getGuests, message, notConfirmation, notDrink, stepDb } from "../services/services";
 import { GrEdit } from "react-icons/gr";
 import { FaCircleCheck } from "react-icons/fa6";
+
+interface Guest {
+    id: number;
+    nome: string;
+    slug: string;
+    telefone: string;
+    message: string;
+    presenca: boolean;
+    bebidaAlcoolica: boolean;
+    step: number;
+}
 
 export const Chat = () => {
     const {
@@ -15,8 +26,19 @@ export const Chat = () => {
     } = useChat();
 
     const { nome } = useParams()
-    const [isEditing, setIsEditing] = useState(false); // Estado para controlar o modo de edição
-    console.log(step)
+    const [currentGuest, setCurrentGuest] = useState<Guest>();
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        const fetchGuests = async () => {
+            const guests = await getGuests(); // Busca todos os convidados
+            const slug = window.location.pathname.replace("/", ""); // Obtém o slug da URL
+            const guest = guests.find((g: Guest) => g.slug === slug); // Encontra o convidado pelo slug
+            setCurrentGuest(guest || undefined); // Atualiza o estado com o convidado encontrado ou undefined
+        };
+
+        fetchGuests();
+    }, []);
 
     function insertMessage(htmlContent: string) {
         const chatElement = document.getElementById("chat");
@@ -30,7 +52,7 @@ export const Chat = () => {
             chatElement.scrollTop = chatElement.scrollHeight;
         }
     }
-    console.log(confirmed)
+    console.log(currentGuest?.nome)
     return (
         <div className="w-full flex min-h-145 md:min-h-140 flex-col justify-between px-6 pb-1 md:pt-25 overflow-y-scroll max-h-[200px]">
             <div id="chat" className="overflow-y-scroll overflow-x-hidden mb-4">
@@ -87,8 +109,8 @@ export const Chat = () => {
                                 </button>
                             ) : (
                                 <button onClick={() => {
-                                    if (nome) {
-                                        message(nome, convidados)
+                                    if (currentGuest) {
+                                        message(currentGuest.nome, convidados)
                                     };
                                     setStep(3);
                                     setIsEditing(false);
@@ -102,6 +124,14 @@ export const Chat = () => {
                                     className="w-full h-full wrap-break-word px-2 py-1 rounded border"
                                     value={convidados}
                                     onChange={(e) => setConvidados(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            setIsEditing(false); // Sai do modo de edição
+                                            if (currentGuest) {
+                                                message(currentGuest.nome, convidados); // Envia os convidados para o backend
+                                            }
+                                        }
+                                    }}
                                 />
                             ) : (
                                 <p>{convidados || "Nenhum convidado informado"}</p>
@@ -118,7 +148,7 @@ export const Chat = () => {
                         <button
                             className="bg-[#3BB2EA] px-3 rounded-md mr-2 cursor-pointer"
                             onClick={() => {
-                                if (nome) { confirmation(nome); stepDb(nome, 1) };
+                                if (currentGuest) { confirmation(currentGuest.nome); stepDb(currentGuest.nome, 1) };
                                 setConfirmed(true)
                                 if (step < 3) setStep(1)
                                 if (step >= 3) {
@@ -129,7 +159,6 @@ export const Chat = () => {
                                         <p class="ml-4">Tu vai beber chopp?</p>
                                     `);
                                 }
-
                             }}
                         >
                             Sim!
@@ -137,7 +166,7 @@ export const Chat = () => {
                         <button
                             className="bg-[#999999] px-3 rounded-md cursor-pointer"
                             onClick={() => {
-                                if (nome) { notConfirmation(nome); stepDb(nome, 1) };
+                                if (currentGuest) { notConfirmation(currentGuest.nome); stepDb(currentGuest.nome, 1) };
                                 setConfirmed(false)
                                 if (step < 3) setStep(1)
                                 if (step >= 3) {
@@ -159,7 +188,7 @@ export const Chat = () => {
                         <div id="10" className="bg-white mt-1 flex items-center h-9 py-1 px-3 rounded-lg border border-[#909090]">
                             <button
                                 className="bg-[#3BB2EA] px-3 rounded-md mr-2 cursor-pointer" onClick={() => {
-                                    if (nome) { drink(nome); stepDb(nome, 2) };
+                                    if (currentGuest) { drink(currentGuest.nome); stepDb(currentGuest.nome, 2) };
                                     setConfirmedChopp(true)
                                     if (step < 3) setStep(2)
                                     insertMessage(`
@@ -175,7 +204,7 @@ export const Chat = () => {
                             <button
                                 className="bg-[#999999] px-3 rounded-md cursor-pointer"
                                 onClick={() => {
-                                    if (nome) { notDrink(nome); stepDb(nome, 2) };
+                                    if (currentGuest) { notDrink(currentGuest.nome); stepDb(currentGuest.nome, 2) };
                                     setConfirmedChopp(false)
                                     if (step < 3) setStep(2)
                                     insertMessage(`
@@ -202,7 +231,7 @@ export const Chat = () => {
                                     onClick={() => {
                                         setConfirmed(!confirmed)
                                         if (confirmed) {
-                                            if (nome) notConfirmation(nome)
+                                            if (currentGuest) notConfirmation(currentGuest.nome)
                                             insertMessage(`
                                                 <p class="text-[#6f6f6f]">Você diz:</p>
                                                 <p class="ml-4">Não, vou mais poder ir à festa de vocês</p>
@@ -210,7 +239,7 @@ export const Chat = () => {
                                                 <p class="ml-4">Tranquilo! Fica pra próxima :)</p>
                                             `);
                                         } else {
-                                            if (nome) confirmation(nome)
+                                            if (currentGuest) confirmation(currentGuest.nome)
                                             insertMessage(`
                                         <p class="text-[#6f6f6f]">Você diz:</p>
                                         <p class="ml-4">Vou ir à festa de vocês</p>
@@ -234,9 +263,9 @@ export const Chat = () => {
                                         onClick={() => {
                                             setConfirmedChopp(!confirmedChopp)
                                             if (confirmedChopp) {
-                                                if (nome) notDrink(nome)
+                                                if (currentGuest) notDrink(currentGuest.nome)
                                             } else {
-                                                if (nome) drink(nome)
+                                                if (currentGuest) drink(currentGuest.nome)
                                             }
                                         }}
                                         className="pl-1 text-[13px]">{confirmedChopp ? "cancelar presença" : "confirmar presença"}
@@ -255,7 +284,7 @@ export const Chat = () => {
                         />
                         <button
                             onClick={() => {
-                                if (nome) { message(nome, convidados); stepDb(nome, 3) };
+                                if (currentGuest) { message(currentGuest.nome, convidados); stepDb(currentGuest.nome, 3) };
                                 if (step < 3) setStep(3)
                             }}
                             className="bg-blue-400 px-3 rounded-sm cursor-pointer"
@@ -278,7 +307,7 @@ export const Chat = () => {
                                     onClick={() => {
                                         setConfirmed(!confirmed)
                                         if (confirmed) {
-                                            if (nome) notConfirmation(nome)
+                                            if (currentGuest) notConfirmation(currentGuest.nome)
                                             insertMessage(`
                                                 <p class="text-[#6f6f6f]">Você diz:</p>
                                                 <p class="ml-4">Não, vou mais poder ir à festa de vocês</p>
@@ -286,7 +315,7 @@ export const Chat = () => {
                                                 <p class="ml-4">Tranquilo! Fica pra próxima :)</p>
                                             `);
                                         } else {
-                                            if (nome) confirmation(nome)
+                                            if (currentGuest) confirmation(currentGuest.nome)
                                             insertMessage(`
                                         <p class="text-[#6f6f6f]">Você diz:</p>
                                         <p class="ml-4">Vou ir à festa de vocês</p>
@@ -298,10 +327,10 @@ export const Chat = () => {
                                     }}
                                     className="pl-1 text-[13px]"
                                 >
-                                    {confirmed ? "cancelar presença" : "confirmar presença"}
+                                    {!confirmed && "confirmar presença"}
                                 </button>
                             </div>
-                            {confirmed && (
+                            {/* {confirmed && (
                                 <div className="flex flex-col sm:flex-row items-center">
                                     <p className="bg-[#3BB2EA] px-2 rounded-sm">
                                         {confirmedChopp ? "🍺 Com chopp" : "🥤 Sem chopp"}
@@ -318,7 +347,7 @@ export const Chat = () => {
                                         className="pl-1 text-[13px]">{confirmedChopp ? "cancelar presença" : "confirmar presença"}
                                     </button>
                                 </div>
-                            )}
+                            )} */}
                         </div>
                         {confirmed && (
                             <div className="flex items-center gap-2">
@@ -330,7 +359,7 @@ export const Chat = () => {
                                     </button>
                                 ) : (
                                     <button onClick={() => {
-                                        if (nome) message(nome, convidados);
+                                        if (currentGuest) message(currentGuest.nome, convidados);
                                         setStep(3);
                                         setIsEditing(false);
                                     }}>
@@ -348,8 +377,8 @@ export const Chat = () => {
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     setIsEditing(false); // Sai do modo de edição
-                                                    if (nome) {
-                                                        message(nome, convidados); // Envia os convidados para o backend
+                                                    if (currentGuest) {
+                                                        message(currentGuest.nome, convidados); // Envia os convidados para o backend
                                                     }
                                                 }
                                             }}

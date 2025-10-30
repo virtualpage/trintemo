@@ -2,12 +2,12 @@ import { useEffect, useState, useRef } from "react";
 import { WindowMsn } from "../components/window-msn";
 import { WindowNotification } from "../components/window-notitication";
 import { WindowTintemo } from "../components/window-trintemo";
-import { confirmation, notConfirmation, getGuests } from "../services/services"; // Importa notConfirmation
+import { getGuests } from "../services/services"; // Importa notConfirmation
 import { useChat } from "../context/chat-context";
 import Countdown from "react-countdown";
 import { FaCheck } from "react-icons/fa6";
 
-type Guest = { nome: string };
+type Guest = { slug: string };
 
 export const Main = () => {
     const [showInvitation, setShowInvitation] = useState(false);
@@ -16,7 +16,7 @@ export const Main = () => {
     const [showNotification, setShowNotification] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [guest, setGuest] = useState<Guest[]>([]);
-    const { currentGuest, setConfirmed, setCurrrentGuest } = useChat(); // Adiciona setConfirmed e setCurrrentGuest do contexto
+    const { currentGuest } = useChat(); // Adiciona setConfirmed e setCurrrentGuest do contexto
 
     const step = currentGuest?.step ?? 0;
 
@@ -59,31 +59,7 @@ export const Main = () => {
         fetchGuests();
     }, []);
 
-    const filtrado = guest?.filter((g: { nome: string }) => g.nome === window.location.pathname.replace("/", ""));
-
-    const handleCancelPresence = async () => {
-        if (currentGuest?.nome) {
-            const result = await notConfirmation(currentGuest.nome); // Chama a função para cancelar a presença
-            if (result) {
-                setConfirmed(false); // Atualiza o estado no contexto
-                setCurrrentGuest({ ...currentGuest, presenca: false }); // Atualiza o estado local de currentGuest
-            } else {
-                alert("Erro ao cancelar a presença.");
-            }
-        }
-    };
-
-    const handleConfirmPresence = async () => {
-        if (currentGuest?.nome) {
-            const result = await confirmation(currentGuest.nome); // Chama a função para confirmar a presença
-            if (result) {
-                setConfirmed(true); // Atualiza o estado no contexto
-                setCurrrentGuest({ ...currentGuest, presenca: true }); // Atualiza o estado local de currentGuest
-            } else {
-                alert("Erro ao confirmar a presença.");
-            }
-        }
-    };
+    const filtrado = guest?.filter((g: { slug: string }) => g.slug === window.location.pathname.replace("/", ""));
 
     return (
         (filtrado && filtrado.length > 0) ? (
@@ -112,7 +88,7 @@ export const Main = () => {
                         <img src="/images/papel.png" alt="papel" className="absolute -right-20 -bottom-45" />
                         <img src="/images/papel.png" alt="papel" className="absolute -left-20 -top-45 rotate-180" />
                         <audio ref={audioRef} src="/audios/notificacao.mp3" />
-                        {currentGuest?.presenca === null || currentGuest?.presenca === false ? (
+                        {currentGuest?.presenca == null || currentGuest?.presenca === false ? (
                             <div className="text-black text-center">
                                 <h2 className="rocket-font text-center bg-white px-3 py-2 border border-gray-600" style={{ fontSize: "23px" }}>Confirmar até dia 10 de Novembro</h2>
                                 <h2 className="rocket-font shadow text-center" style={{ fontSize: "27px" }}>Faltam:</h2>
@@ -126,29 +102,7 @@ export const Main = () => {
                         ) : (
                             <div className="text-black text-center">
                                 <span className="text-white px-4 block py-2 rocket-font mb-2 bg-black"><FaCheck className="inline" /> confirmado</span>
-                                <span className="text-black px-4 py-2 block rocket-font">Faltam</span>
-                                <Countdown
-                                    date={new Date(2025, 12, 13, 16, 0, 0)}
-                                    renderer={({ days, hours, minutes, seconds }) => (
-                                        <span className="text-black px-2 py-1 whitespace-nowrap rocket-font pt-3">{days}d {hours}h {minutes}m {seconds}s</span>
-                                    )}
-                                />
                             </div>
-                        )}
-                        {currentGuest?.presenca ? (
-                            <button
-                                onClick={handleCancelPresence}
-                                className="bg-red-500 text-white px-4 py-2 rounded-md mt-4"
-                            >
-                                Cancelar Presença
-                            </button>
-                        ) : (
-                            <button
-                                onClick={handleConfirmPresence}
-                                className="bg-green-700 text-white px-4 py-2 rounded-md mt-4"
-                            >
-                                Confirmar Presença
-                            </button>
                         )}
                     </>
                 )}
