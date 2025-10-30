@@ -42,9 +42,9 @@ export const GuestPanel = () => {
         setLoading(true);
         const success = await newGuest(newGuestName);
         if (success) {
-            const data = await getGuests(); // Busca a lista atualizada da API
-            setGuests(data); // Atualiza a lista de convidados com os dados da API
-            setNewGuestName(""); // Limpa o campo de entrada
+            const data = await getGuests(); 
+            setGuests(data); 
+            setNewGuestName(""); 
         }
         setLoading(false);
     };
@@ -57,11 +57,13 @@ export const GuestPanel = () => {
             alert("Erro ao deletar o convidado.");
         }
     };
-
+console.log(guests)
     return (
         <main className="min-h-screen w-full max-w-screen relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background overflow-x-scroll">
-            <div className=" mx-auto p-4 bg-white rounded shadow">
-                <h2 className="text-xl font-bold mb-4">Lista de Convidados</h2>
+            <div className=" mx-auto p-4 bg-white rounded shadow z-99">
+                <h2 className="text-xl font-bold mb-4">
+                        Lista de Convidados | Presença: {guests.filter((guest) => guest.presenca === true).length} | Bebe: {guests.filter((guest) => guest.bebidaAlcoolica === true).length}
+                    </h2>
                 <div className="flex gap-2 mb-4">
                     <input
                         type="text"
@@ -88,9 +90,9 @@ export const GuestPanel = () => {
                         <tr className="bg-gray-100">
                             <th className="py-2 px-4 text-left">Nome</th>
                             <th className="py-2 px-4 text-left">Convite</th>
-                            <th className="py-2 px-4 text-left">Presença</th>
-                            <th className="py-2 px-4 text-left">Bebe</th>
-                            <th className="py-2 px-4 text-left">Mensagem</th>
+                            <th className="py-2 px-4 text-left">Presença ({guests.filter((guest) => guest.presenca === true).length})</th>
+                            <th className="py-2 px-4 text-left">Bebe ({guests.filter((guest) => guest.bebidaAlcoolica === true).length})</th>
+                            <th className="py-2 px-4 text-left">Convidados</th>
                         </tr>
                     </thead>
                     <tbody>
