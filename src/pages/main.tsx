@@ -76,11 +76,13 @@ export const Main = () => {
                         {showMessage && <WindowMsn close={() => setShowMessage(false)} />}
                         <div className="md:flex relative pt-28 md:pt-38 lg:pt-24">
                             <img src="/images/trint.png" alt="trin" className="w-40 md:scale-140" />
-                            <img src="/images/emo.png" alt="emo" className="w-40 md:scale-140 md:ml-28" />
-                            <img src="/images/mao-rock.png" alt="papel" className="absolute w-30 -left-40" />
-                            <img src="/images/aspas.png" alt="papel" className="absolute w-15 -right-40" />
+                            <img src="/images/emo.png" alt="emo" className="w-40 md:scale-140 md:ml-8" />
+                            <img src="/images/aspas.png" alt="papel" className="hidden md:block absolute w-15 top-28 lg:top-14 -right-14" />
                         </div>
-                        <img src="/images/foto-home.png" alt="home" className="w-80 px-2 md:scale-140" />
+                        <div className="relative">
+                            <img src="/images/foto-home.png" alt="home" className="w-80 px-2 md:scale-140 translate-x-2" />
+                            <img src="/images/mao-rock.png" alt="papel" className="absolute w-30 -translate-y-2 -right-10.5 rotate-25" />
+                        </div>
                         {showNotification && !showMessage && (
                             <WindowNotification openNotification={openMessageWindow} />
                         )}
@@ -108,7 +110,7 @@ export const Main = () => {
             </main>
         ) : (
             <main className="min-h-screen w-full relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background">
-                
+
             </main>
         )
     );
