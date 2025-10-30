@@ -62,7 +62,7 @@ export const GuestPanel = () => {
         <main className="min-h-screen w-full max-w-screen relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background overflow-x-scroll">
             <div className=" mx-auto p-4 bg-white rounded shadow z-99">
                 <h2 className="text-xl font-bold mb-4">
-                        Lista de Convidados | Presença: {guests.filter((guest) => guest.presenca === true).length} | Bebe: {guests.filter((guest) => guest.bebidaAlcoolica === true).length}
+                        Lista de Convidados
                     </h2>
                 <div className="flex gap-2 mb-4">
                     <input

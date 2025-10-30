@@ -57,7 +57,7 @@ export const Chat = () => {
         <div className="w-full flex min-h-145 md:min-h-140 flex-col justify-between px-6 pb-1 md:pt-25 overflow-y-scroll max-h-[200px]">
             <div id="chat" className="overflow-y-scroll overflow-x-hidden mb-4">
                 <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                <p className="ml-4">Oii, {nome}! Vai poder vir pra nossa festa?</p>
+                <p className="ml-4">Oii, {currentGuest?.nome}! Vai poder vir pra nossa festa?</p>
                 <p className="ml-4">Vai ser dia 13 de dezembro às 16h em Eldorado do Sul</p>
                 {confirmed == false && (
                     <div id="1">
@@ -77,7 +77,7 @@ export const Chat = () => {
                         </div>
                     ))
                 }
-                {step == 2 && confirmedChopp && (
+                {step >= 2 && confirmed && (
                     confirmedChopp ? (
                         <div id="4">
                             <p className="text-[#6f6f6f]">Você diz:</p>
@@ -191,12 +191,12 @@ export const Chat = () => {
                                     if (currentGuest) { drink(currentGuest.nome); stepDb(currentGuest.nome, 2) };
                                     setConfirmedChopp(true)
                                     if (step < 3) setStep(2)
-                                    insertMessage(`
-                                    <p class="text-[#6f6f6f]">Você diz:</p>
-                                    <p class="ml-4">Sim!</p>
-                                    <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                                    <p class="ml-4">E quem mais vai vir junto?</p>
-                                `);
+                                //     insertMessage(`
+                                //     <p class="text-[#6f6f6f]">Você diz:</p>
+                                //     <p class="ml-4">Sim!</p>
+                                //     <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                                //     <p class="ml-4">E quem mais vai vir junto?</p>
+                                // `);
                                 }}
                             >
                                 Sim! 🍺
@@ -207,19 +207,19 @@ export const Chat = () => {
                                     if (currentGuest) { notDrink(currentGuest.nome); stepDb(currentGuest.nome, 2) };
                                     setConfirmedChopp(false)
                                     if (step < 3) setStep(2)
-                                    insertMessage(`
-                                    <p class="text-[#6f6f6f]">Você diz:</p>
-                                    <p class="ml-4">Sim!</p>
-                                    <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                                    <p class="ml-4">E quem mais vai vir junto?</p>
-                                `);
+                                //     insertMessage(`
+                                //     <p class="text-[#6f6f6f]">Você diz:</p>
+                                //     <p class="ml-4">Não!</p>
+                                //     <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                                //     <p class="ml-4">E quem mais vai vir junto?</p>
+                                // `);
                                 }}
                             >
                                 Não
                             </button>
                         </div>
                     ) : (
-                        <div id="11" className={`${confirmed ? "h-25" : "h-13"} bg-white mt-1 flex flex-col lg:flex-row justify-center gap-4 items-center sm:h-20 lg:h-9 py-1 px-3 rounded-lg border border-[#909090]`}>
+                        <div id="11" className={`${confirmed ? "h-13" : "h-13"} bg-white mt-1 flex flex-col lg:flex-row justify-center gap-4 items-center sm:h-20 lg:h-9 py-1 px-3 rounded-lg border border-[#909090]`}>
                             <div className="flex flex-col sm:flex-row items-center">
                                 <p
                                     className="px-2 rounded-sm"
@@ -295,7 +295,7 @@ export const Chat = () => {
                 )}
                 {step == 3 && (
                     <>
-                        <div className={`${confirmed ? "h-25" : "h-13"} bg-white mt-1 flex flex-col lg:flex-row justify-center gap-4 items-center sm:h-20 lg:h-9 py-1 px-3 rounded-lg border border-[#909090]`}>
+                        <div className={`${confirmed ? "h-13" : "h-13"} bg-white mt-1 flex flex-col lg:flex-row justify-center gap-4 items-center sm:h-13 lg:h-9 py-1 px-3 rounded-lg border border-[#909090]`}>
                             <div className="flex flex-col sm:flex-row items-center">
                                 <p
                                     className="px-2 rounded-sm"
