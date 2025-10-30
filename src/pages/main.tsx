@@ -72,9 +72,9 @@ export const Main = () => {
                         <img src="/images/papel.png" alt="papel" className="absolute -left-20 -top-45 rotate-180" />
                     </div>
                 ) : (
-                    <div className="flex w-full flex-col items-center justify-center gap-6">
+                    <div className="flex w-full flex-col items-center justify-center md:gap-6">
                         {showMessage && <WindowMsn close={() => setShowMessage(false)} />}
-                        <div className="md:flex relative pt-28 md:pt-38 lg:pt-24">
+                        <div className="md:flex relative pt-38 md:pt-38 lg:pt-24">
                             <img src="/images/trint.png" alt="trin" className="w-40 md:scale-140" />
                             <img src="/images/emo.png" alt="emo" className="w-40 md:scale-140 md:ml-8" />
                             <img src="/images/aspas.png" alt="papel" className="hidden md:block absolute w-15 top-28 lg:top-14 -right-14" />
