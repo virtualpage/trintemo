@@ -90,7 +90,7 @@ export const GuestPanel = () => {
                     <thead>
                         <tr className="bg-gray-100">
                             <th className="py-2 px-4 text-left">Nome</th>
-                            <th className="py-2 px-4 text-left">Convite</th>
+                            <th className="py-2 px-4 text-left">Convite ({guests.length})</th>
                             <th className="py-2 px-4 text-left">Presença ({guests.filter((guest) => guest.presenca === true).length})</th>
                             <th className="py-2 px-4 text-left">Bebe ({guests.filter((guest) => guest.bebidaAlcoolica === true).length})</th>
                             <th className="py-2 px-4 text-left">Convidados</th>
