@@ -57,7 +57,6 @@ export const GuestPanel = () => {
             alert("Erro ao deletar o convidado.");
         }
     };
-    console.log(guests)
 
     return (
         <main className="min-h-screen w-full max-w-screen relative px-3 py-8 flex flex-col md:gap-18 items-center justify-center grid-background overflow-x-scroll">

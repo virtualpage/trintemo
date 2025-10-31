@@ -27,6 +27,7 @@ export const Chat = () => {
 
     const { nome } = useParams()
     const [currentGuest, setCurrentGuest] = useState<Guest>();
+    const [singleGuest, setSingleGuest] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
@@ -52,12 +53,19 @@ export const Chat = () => {
             chatElement.scrollTop = chatElement.scrollHeight;
         }
     }
+    useEffect(() => {
+        if (currentGuest?.nome && currentGuest.nome.split(" ").length >= 2) {
+            setSingleGuest(false);
+        } else if (currentGuest?.nome) {
+            setSingleGuest(true);
+        }
+    }, [currentGuest]);
 
     return (
         <div className="w-full flex min-h-145 md:min-h-140 flex-col justify-between px-6 pb-1 md:pt-25 overflow-y-scroll max-h-[200px]">
             <div id="chat" className="overflow-y-scroll overflow-x-hidden mb-4">
                 <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                <p className="ml-4">Oii, {currentGuest?.nome}! Vai poder vir pra nossa festa?</p>
+                <p className="ml-4">Oii, {currentGuest?.nome}! {singleGuest ? "Vai" : "vocês vão"} poder vir pra nossa festa?</p>
                 <p className="ml-4">Vai ser dia 13 de dezembro às 16h em Eldorado do Sul</p>
                 {confirmed == false && (
                     <div id="1">
@@ -73,7 +81,7 @@ export const Chat = () => {
                             <p className="text-[#6f6f6f]">Você diz:</p>
                             <p className="ml-4">Sim!</p>
                             <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                            <p className="ml-4">Tu vai beber chopp?</p>
+                            <p className="ml-4">{singleGuest ? "Tu vai beber chopp?" : "Vocês vão beber chopp?"}</p>
                         </div>
                     ))
                 }
@@ -83,18 +91,18 @@ export const Chat = () => {
                             <p className="text-[#6f6f6f]">Você diz:</p>
                             <p className="ml-4">Sim!</p>
                             <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                            <p className="ml-4">E quem mais vai vir junto?</p>
+                            <p className="ml-4">{singleGuest ? "Combinado, a gente te aguarda lá" : "Todos do convite virão?"}</p>
                         </div>
                     ) : (
                         <div id="5">
                             <p className="text-[#6f6f6f]">Você diz:</p>
                             <p className="ml-4">Não</p>
                             <p className="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                            <p className="ml-4">E quem mais vai vir junto?</p>
+                            <p className="ml-4">{singleGuest ? "Combinado, a gente te aguarda lá" : "Todos do convite virão?"}</p>
                         </div>
                     )
                 )}
-                {step > 2 && confirmed && (
+                {step > 2 && confirmed && !singleGuest && (
                     <div id="6">
                         <p className="text-[#6f6f6f]">Você diz:</p>
                         <div className="flex items-center gap-2">
@@ -191,12 +199,6 @@ export const Chat = () => {
                                     if (currentGuest) { drink(currentGuest.nome); stepDb(currentGuest.nome, 2) };
                                     setConfirmedChopp(true)
                                     if (step < 3) setStep(2)
-                                //     insertMessage(`
-                                //     <p class="text-[#6f6f6f]">Você diz:</p>
-                                //     <p class="ml-4">Sim!</p>
-                                //     <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                                //     <p class="ml-4">E quem mais vai vir junto?</p>
-                                // `);
                                 }}
                             >
                                 Sim! 🍺
@@ -207,12 +209,6 @@ export const Chat = () => {
                                     if (currentGuest) { notDrink(currentGuest.nome); stepDb(currentGuest.nome, 2) };
                                     setConfirmedChopp(false)
                                     if (step < 3) setStep(2)
-                                //     insertMessage(`
-                                //     <p class="text-[#6f6f6f]">Você diz:</p>
-                                //     <p class="ml-4">Não!</p>
-                                //     <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                                //     <p class="ml-4">E quem mais vai vir junto?</p>
-                                // `);
                                 }}
                             >
                                 Não
@@ -240,12 +236,6 @@ export const Chat = () => {
                                             `);
                                         } else {
                                             if (currentGuest) confirmation(currentGuest.nome)
-                                            insertMessage(`
-                                        <p class="text-[#6f6f6f]">Você diz:</p>
-                                        <p class="ml-4">Vou ir à festa de vocês</p>
-                                        <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
-                                        <p class="ml-4">Combinado, a gente te aguarda lá</p>
-                                    `);
                                         }
 
                                     }}
@@ -274,7 +264,7 @@ export const Chat = () => {
                             )}
                         </div>
                     ))}
-                {step == 2 && confirmed && (
+                {step == 2 && confirmed && !singleGuest && (
                     <div className="bg-white mt-1 flex justify-center h-9 py-1 px-3 rounded-lg border border-[#909090]">
                         <input
                             type="text"
@@ -293,7 +283,7 @@ export const Chat = () => {
                         </button>
                     </div>
                 )}
-                {step == 3 && (
+                {step == 2 && confirmed && singleGuest && (
                     <>
                         <div className={`${confirmed ? "h-13" : "h-13"} bg-white mt-1 flex flex-col lg:flex-row justify-center gap-4 items-center sm:h-13 lg:h-9 py-1 px-3 rounded-lg border border-[#909090]`}>
                             <div className="flex flex-col sm:flex-row items-center">
@@ -330,24 +320,86 @@ export const Chat = () => {
                                     {!confirmed && "confirmar presença"}
                                 </button>
                             </div>
-                            {/* {confirmed && (
-                                <div className="flex flex-col sm:flex-row items-center">
-                                    <p className="bg-[#3BB2EA] px-2 rounded-sm">
-                                        {confirmedChopp ? "🍺 Com chopp" : "🥤 Sem chopp"}
-                                    </p>
-                                    <button
-                                        onClick={() => {
-                                            setConfirmedChopp(!confirmedChopp)
-                                            if (confirmedChopp) {
-                                                if (nome) notDrink(nome)
-                                            } else {
-                                                if (nome) drink(nome)
-                                            }
-                                        }}
-                                        className="pl-1 text-[13px]">{confirmedChopp ? "cancelar presença" : "confirmar presença"}
+                        </div>
+                        {/* {confirmed && (
+                            <div className="flex items-center gap-2">
+                                {!isEditing ? (
+                                    <button onClick={() => {
+                                        setIsEditing(!isEditing)
+                                    }}>
+                                        <GrEdit />
                                     </button>
-                                </div>
-                            )} */}
+                                ) : (
+                                    <button onClick={() => {
+                                        if (currentGuest) message(currentGuest.nome, convidados);
+                                        setStep(3);
+                                        setIsEditing(false);
+                                    }}>
+                                        <FaCircleCheck className="text-[#3BB2EA]" />
+                                    </button>
+                                )}
+                                {isEditing ? (
+                                    <>
+                                        <span className="whitespace-nowrap">Convidados: {nome} e</span>
+                                        <input
+                                            type="text"
+                                            className="w-full h-full my-1 wrap-break-word px-2 py-1 rounded border"
+                                            value={convidados}
+                                            onChange={(e) => setConvidados(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    setIsEditing(false); // Sai do modo de edição
+                                                    if (currentGuest) {
+                                                        message(currentGuest.nome, convidados); // Envia os convidados para o backend
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    </>
+                                ) : (
+                                    <p className="w-full h-full my-2">Convidados: {nome} {convidados && "e"} {convidados || ""}</p>
+                                )}
+                            </div>
+                        )} */}
+                    </>
+                )}
+                {step == 3 && !singleGuest && (
+                    <>
+                        <div className={`${confirmed ? "h-13" : "h-13"} bg-white mt-1 flex flex-col lg:flex-row justify-center gap-4 items-center sm:h-13 lg:h-9 py-1 px-3 rounded-lg border border-[#909090]`}>
+                            <div className="flex flex-col sm:flex-row items-center">
+                                <p
+                                    className="px-2 rounded-sm"
+                                    style={{ backgroundColor: confirmed ? "#60C540" : "#ce342f", color: confirmed ? "#000000" : "#ffffff" }}
+                                >
+                                    {confirmed ? "✅ Presença confirmada" : "❌ Presença cancelada"}
+                                </p>
+                                <button
+                                    onClick={() => {
+                                        setConfirmed(!confirmed)
+                                        if (confirmed) {
+                                            if (currentGuest) notConfirmation(currentGuest.nome)
+                                            insertMessage(`
+                                                <p class="text-[#6f6f6f]">Você diz:</p>
+                                                <p class="ml-4">Não, vou mais poder ir à festa de vocês</p>
+                                                <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                                                <p class="ml-4">Tranquilo! Fica pra próxima :)</p>
+                                            `);
+                                        } else {
+                                            if (currentGuest) confirmation(currentGuest.nome)
+                                            insertMessage(`
+                                        <p class="text-[#6f6f6f]">Você diz:</p>
+                                        <p class="ml-4">Vou ir à festa de vocês</p>
+                                        <p class="text-[#6f6f6f]">Gabi e Henrique dizem:</p>
+                                        <p class="ml-4">Combinado, a gente te aguarda lá</p>
+                                    `);
+                                        }
+
+                                    }}
+                                    className="pl-1 text-[13px]"
+                                >
+                                    {!confirmed && "confirmar presença"}
+                                </button>
+                            </div>
                         </div>
                         {confirmed && (
                             <div className="flex items-center gap-2">
