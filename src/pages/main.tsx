@@ -9,7 +9,6 @@ type Guest = { slug: string };
 
 export const Main = () => {
     const [showInvitation, setShowInvitation] = useState(false);
-    const [playNotificationSound, setPlayNotificationSound] = useState(true);
     const [showMessage, setShowMessage] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -31,7 +30,7 @@ console.log(currentGuest)
 
     useEffect(() => {
         if (audioRef.current && step < 3) {
-            if (playNotificationSound && showNotification && !showMessage) {
+            if (showNotification && !showMessage) {
                 audioRef.current.play().catch((error) => {
                     console.error("Erro ao tentar reproduzir o áudio:", error);
                 });
@@ -40,7 +39,7 @@ console.log(currentGuest)
                 audioRef.current.currentTime = 0;
             }
         }
-    }, [showNotification, showMessage, playNotificationSound, step]);
+    }, [showNotification, showMessage, step]);
 
     useEffect(() => {
         const fetchGuests = async () => {
